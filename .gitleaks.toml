@@ -1,0 +1,7 @@
+title = "cloud gaming allowlist"
+
+[allowlist]
+description = "Placeholder credentials in the example file are not a live password."
+paths = [
+  '''config/credentials.json.example''',
+]

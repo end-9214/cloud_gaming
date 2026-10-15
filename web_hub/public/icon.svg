@@ -1,0 +1,23 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
+  <defs>
+    <linearGradient id="grad1" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#00f2fe;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#4facfe;stop-opacity:1" />
+    </linearGradient>
+    <linearGradient id="bgGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#0f172a;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#020617;stop-opacity:1" />
+    </linearGradient>
+  </defs>
+  <rect width="512" height="512" rx="128" fill="url(#bgGrad)" />
+  <circle cx="256" cy="256" r="220" fill="none" stroke="#00f2fe" stroke-width="6" opacity="0.4" stroke-dasharray="12 12" />
+  <!-- Game Controller Path -->
+  <path d="M370.4 148c-30.8 0-60.6 15.6-77.9 41.5-9.6 14.3-21.4 14.3-31 0C244.2 163.6 214.4 148 183.6 148 108.6 148 56 208.8 56 283.8c0 51.5 32.7 93.6 78.4 104.9 22.8 5.6 44.8-7.8 51.6-30.3l7.9-26.2c4.1-13.6 16.6-23.1 30.8-23.1h62.6c14.2 0 26.7 9.5 30.8 23.1l7.9 26.2c6.8 22.5 28.8 35.9 51.6 30.3 45.7-11.3 78.4-53.4 78.4-104.9C496 208.8 445.4 148 370.4 148z" fill="none" stroke="url(#grad1)" stroke-width="24" stroke-linecap="round" stroke-linejoin="round"/>
+  <!-- D-Pad -->
+  <path d="M160 220v40m-20-20h40" stroke="#00f2fe" stroke-width="14" stroke-linecap="round"/>
+  <!-- Buttons -->
+  <circle cx="340" cy="230" r="10" fill="#4facfe" />
+  <circle cx="370" cy="250" r="10" fill="#00f2fe" />
+  <circle cx="340" cy="270" r="10" fill="#00f2fe" />
+  <circle cx="310" cy="250" r="10" fill="#4facfe" />
+</svg>

@@ -1,0 +1,42 @@
+{
+  "env": {
+    "PATH": "$(PATH):/usr/local/bin:/usr/bin",
+    "__NV_PRIME_RENDER_OFFLOAD": "1",
+    "__GLX_VENDOR_LIBRARY_NAME": "nvidia",
+    "__VK_LAYER_NV_optimus": "NVIDIA_only",
+    "MANGOHUD": "1",
+    "MANGOHUD_DLSYM": "1"
+  },
+  "apps": [
+    {
+      "name": "Steam",
+      "output": "",
+      "cmd": "steam",
+      "prep-cmd": [
+        {
+          "do": "",
+          "undo": ""
+        }
+      ],
+      "exclude-global-prep-cmd": "false",
+      "auto-detach": "true",
+      "wait-all": "true",
+      "exit-timeout": "5"
+    },
+    {
+      "name": "Desktop",
+      "output": "",
+      "cmd": "",
+      "prep-cmd": [
+        {
+          "do": "",
+          "undo": ""
+        }
+      ],
+      "exclude-global-prep-cmd": "false",
+      "auto-detach": "true",
+      "wait-all": "true",
+      "exit-timeout": "5"
+    }
+  ]
+}

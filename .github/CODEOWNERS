@@ -1,0 +1,5 @@
+# The maintainer reviews every change before it is merged.
+* @end-9214
+/.cursor/ @end-9214
+/.github/ @end-9214
+/config/ @end-9214

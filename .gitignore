@@ -1,0 +1,12 @@
+config/credentials.json
+config/local.env
+*.log
+__pycache__/
+**/__pycache__/
+albion_online_jev/
+openjev_browser.py
+check_help.py
+inspect_sunshine.py
+live_pair.py
+inspect_binary.py
+check_sunshine_state.py

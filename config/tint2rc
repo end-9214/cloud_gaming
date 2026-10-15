@@ -1,0 +1,49 @@
+# Tint2 configuration for Cloud Gaming
+# Background 1: Panel background
+rounded = 0
+border_width = 1
+background_color = #0a0e1a 90
+border_color = #00f0ff 40
+
+# Background 2: Active task
+rounded = 4
+border_width = 1
+background_color = #1a2238 90
+border_color = #00f0ff 80
+
+# Panel
+panel_monitor = all
+panel_position = bottom center horizontal
+panel_size = 100% 40
+panel_margin = 0 0
+panel_padding = 8 4 8
+panel_background_id = 1
+panel_dock = 0
+panel_items = LTSBC
+
+# Taskbar
+taskbar_mode = single_desktop
+taskbar_padding = 4 2 4
+taskbar_background_id = 0
+taskbar_active_background_id = 2
+taskbar_name = 0
+taskbar_hide_inactive_tasks = 0
+taskbar_always_show_all_desktop_tasks = 1
+
+# Tasks
+task_icon = 1
+task_text = 1
+task_centered = 1
+task_maximum_size = 200 32
+task_padding = 6 2
+task_font = Sans 10
+task_font_color = #c0caf5 80
+task_active_font_color = #ffffff 100
+
+# Clock
+time1_format = %H:%M
+time2_format = %d %b
+clock_font_color = #00f0ff 100
+clock_padding = 8 2
+clock_background_id = 0
+clock_font = Sans 10

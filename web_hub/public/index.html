@@ -1,0 +1,329 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <title>Cloud Gaming Hub | NVIDIA L40S</title>
+  <link rel="stylesheet" href="style.css">
+  <link rel="manifest" href="manifest.json">
+  <meta name="theme-color" content="#00f2fe">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <link rel="icon" type="image/svg+xml" href="icon.svg">
+  <link rel="apple-touch-icon" href="icon.svg">
+</head>
+<body>
+  <!-- Header -->
+  <header>
+    <div class="brand">
+      <img src="icon.svg" alt="Cloud Gaming Logo" class="brand-icon">
+      <div>
+        <h1>CLOUD GAMING HUB</h1>
+        <span>NVIDIA NVENC &bull; PROTON &bull; SUNSHINE</span>
+      </div>
+    </div>
+    <div class="header-badges">
+      <div class="badge badge-online">
+        <span class="pulse-dot"></span>
+        <span>ONLINE</span>
+      </div>
+      <div class="badge badge-tailscale" id="tailscale-badge">
+        TS: detecting…
+      </div>
+    </div>
+  </header>
+
+  <!-- Navigation Tabs -->
+  <nav class="tab-nav" role="tablist">
+    <button class="tab-btn active" id="tab-btn-dashboard" data-tab="dashboard">
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="7" height="7"></rect><rect x="14" y="3" width="7" height="7"></rect><rect x="14" y="14" width="7" height="7"></rect><rect x="3" y="14" width="7" height="7"></rect></svg>
+      Dashboard
+    </button>
+    <button class="tab-btn" id="tab-btn-games" data-tab="games">
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="5 3 19 12 5 21 5 3"></polygon></svg>
+      Games & Steam
+    </button>
+    <button class="tab-btn" id="tab-btn-pairing" data-tab="pairing">
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="5" y="2" width="14" height="20" rx="2" ry="2"></rect><line x1="12" y1="18" x2="12.01" y2="18"></line></svg>
+      Pair Phone
+    </button>
+    <button class="tab-btn" id="tab-btn-settings" data-tab="settings">
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="3"></circle><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"></path></svg>
+      Host Settings
+    </button>
+  </nav>
+
+  <!-- Main Views -->
+  <main>
+    <!-- Tab 1: Dashboard -->
+    <div class="tab-content active" id="view-dashboard">
+      <h2 class="section-title">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z"></path></svg>
+        Hardware Telemetry
+      </h2>
+      
+      <div class="telemetry-grid">
+        <!-- GPU Load Card -->
+        <div class="card" id="card-gpu-util">
+          <div class="card-header">
+            <span class="card-title">GPU Utilization</span>
+            <span class="card-badge" id="gpu-clock">0 MHz</span>
+          </div>
+          <div class="card-value" id="val-gpu-util">0%</div>
+          <div class="progress-bar-container">
+            <div class="progress-bar-fill" id="bar-gpu-util" style="width: 0%;"></div>
+          </div>
+          <div class="card-subtext" id="sub-gpu-power">Power Draw: 0W / 350W</div>
+        </div>
+
+        <!-- VRAM Card -->
+        <div class="card" id="card-vram">
+          <div class="card-header">
+            <span class="card-title">GDDR6 VRAM</span>
+            <span class="card-badge">46 GB Total</span>
+          </div>
+          <div class="card-value" id="val-vram">0.0 GB</div>
+          <div class="progress-bar-container">
+            <div class="progress-bar-fill" id="bar-vram" style="width: 0%;"></div>
+          </div>
+          <div class="card-subtext" id="sub-vram-pct">0% used &bull; Zero bottleneck</div>
+        </div>
+
+        <!-- GPU Temp Card -->
+        <div class="card" id="card-temp">
+          <div class="card-header">
+            <span class="card-title">GPU Temperature</span>
+            <span class="card-badge">Thermal Target: 85°C</span>
+          </div>
+          <div class="card-value" id="val-temp">33°C</div>
+          <div class="progress-bar-container">
+            <div class="progress-bar-fill" id="bar-temp" style="width: 35%; background: var(--accent-green);"></div>
+          </div>
+          <div class="card-subtext" id="sub-temp-status">Optimal &bull; Cool</div>
+        </div>
+
+        <!-- CPU & System RAM Card -->
+        <div class="card" id="card-cpu">
+          <div class="card-header">
+            <span class="card-title">EPYC CPU & 128GB RAM</span>
+            <span class="card-badge">16 vCPUs</span>
+          </div>
+          <div class="card-value" id="val-cpu">0%</div>
+          <div class="progress-bar-container">
+            <div class="progress-bar-fill" id="bar-cpu" style="width: 0%; background: var(--neon-blue);"></div>
+          </div>
+          <div class="card-subtext" id="sub-ram">RAM: 11 / 127 GB Used</div>
+        </div>
+      </div>
+
+      <!-- Streaming & Stack Status -->
+      <h2 class="section-title">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 14 14"></polyline></svg>
+        Streaming Stack Services
+      </h2>
+      <div class="card">
+        <p style="font-size: 0.9rem; color: var(--text-muted); margin-bottom: 0.85rem;">
+          Real-time status of the headless display server, virtual game audio sink, hardware NVENC streaming daemon, and Steam runtime.
+        </p>
+        <div class="service-list">
+          <div class="service-pill" id="pill-display">
+            <span class="pulse-dot"></span> Virtual Display (:0)
+          </div>
+          <div class="service-pill" id="pill-audio">
+            <span class="pulse-dot"></span> Virtual PulseAudio Sink
+          </div>
+          <div class="service-pill" id="pill-sunshine">
+            <span class="pulse-dot"></span> Sunshine Stream Host
+          </div>
+          <div class="service-pill" id="pill-steam">
+            <span class="pulse-dot"></span> Steam Engine
+          </div>
+        </div>
+      </div>
+
+      <!-- Quick Control Actions -->
+      <h2 class="section-title">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"></polygon><path d="M19.07 4.93a10 10 0 0 1 0 14.14M15.54 8.46a5 5 0 0 1 0 7.07"></path></svg>
+        Quick Controls
+      </h2>
+      <div class="actions-grid">
+        <div class="action-card">
+          <div class="action-info">
+            <h3>Restart Streaming Stack</h3>
+            <p>Restart virtual display :0, audio sink, and Sunshine streamer.</p>
+          </div>
+          <button class="btn btn-secondary" id="btn-restart-services" onclick="controlServices('restart')">
+            Restart Stack
+          </button>
+        </div>
+
+        <div class="action-card">
+          <div class="action-info">
+            <h3>Stop Streaming Stack</h3>
+            <p>Completely stop display :0, disconnect active stream, and free GPU resources.</p>
+          </div>
+          <button class="btn btn-secondary" id="btn-stop-services" style="border-color: rgba(255, 75, 75, 0.4); color: #ff5555;" onclick="controlServices('stop')">
+            Stop Stack
+          </button>
+        </div>
+
+        <div class="action-card">
+          <div class="action-info">
+            <h3>Start Streaming Stack</h3>
+            <p>Power up virtual display :0, audio sink, and Sunshine streamer.</p>
+          </div>
+          <button class="btn btn-secondary" id="btn-start-services" style="border-color: rgba(0, 255, 170, 0.4); color: #00ffaa;" onclick="controlServices('start')">
+            Start Stack
+          </button>
+        </div>
+
+        <div class="action-card">
+          <div class="action-info">
+            <h3>Launch Steam</h3>
+            <p>Opens Steam Desktop on the virtual display ready for stream.</p>
+          </div>
+          <button class="btn btn-primary" id="btn-launch-steam" onclick="launchSteam()">
+            Launch Steam
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Tab 2: Games & Steam -->
+    <div class="tab-content" id="view-games">
+      <h2 class="section-title">Game Library & Steam Proton</h2>
+      <div class="card" style="margin-bottom: 1.5rem;">
+        <h3 style="margin-bottom: 0.5rem;">How Game Execution Works</h3>
+        <p style="color: var(--text-muted); font-size: 0.9rem; line-height: 1.7;">
+          Your server runs <strong>Steam for Linux with Valve Proton</strong>. When you connect via Moonlight, you will see your Steam desktop environment. You can download any game in your library (DirectX 9/11/12 or Vulkan), and play with hardware NVENC streaming.
+        </p>
+      </div>
+
+      <div class="actions-grid">
+        <div class="action-card" style="flex-direction: column; align-items: flex-start;">
+          <h3>1. Launch Steam Desktop</h3>
+          <p style="margin-bottom: 1rem;">Launches standard Steam Desktop UI on display :0.</p>
+          <button class="btn btn-primary" onclick="launchSteam()">Open Steam</button>
+        </div>
+
+        <div class="action-card" style="flex-direction: column; align-items: flex-start;">
+          <h3>3. Open Sunshine Host Console</h3>
+          <p style="margin-bottom: 1rem;">Configure custom game executables, bitrates, and client settings.</p>
+          <p style="font-size: 0.85rem; color: var(--text-dim);">The Sunshine admin UI accepts connections from localhost on the server only.</p>
+        </div>
+      </div>
+    </div>
+
+    
+      <div class="card" style="margin-top: 1.5rem;">
+        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1rem;">
+          <h3 style="margin: 0;">🎮 Installed Steam Games</h3>
+          <button class="btn btn-secondary" style="font-size: 0.8rem; padding: 0.3rem 0.7rem;" onclick="loadInstalledGames()">Refresh List</button>
+        </div>
+        <p style="font-size: 0.85rem; color: var(--text-muted); margin-bottom: 1rem;">
+          If Steam's built-in uninstall popup doesn't register on headless/virtual display, you can instantly uninstall and purge games here:
+        </p>
+        <div id="installed-games-list" style="display: grid; gap: 0.75rem;">
+          <div style="color: var(--text-dim); font-size: 0.85rem;">Loading installed games...</div>
+        </div>
+      </div>
+
+    <!-- Tab 3: Pair Phone (Moonlight Setup) -->
+    <div class="tab-content" id="view-pairing">
+      <h2 class="section-title">Connect Your Phone in 3 Simple Steps</h2>
+      
+      <div class="guide-container">
+        <!-- Step 1 -->
+        <div class="step-card">
+          <div class="step-number">1</div>
+          <h3>Install Moonlight on Your Phone</h3>
+          <p>
+            Download the official <strong>Moonlight Game Streaming</strong> app for your mobile device. It is 100% free and open-source with zero ads.
+          </p>
+          <div style="display: flex; gap: 0.5rem; flex-wrap: wrap;">
+            <a href="https://play.google.com/store/apps/details?id=com.limelight" target="_blank" class="btn btn-secondary">
+              Android (Google Play)
+            </a>
+            <a href="https://apps.apple.com/us/app/moonlight-game-streaming/id1000551566" target="_blank" class="btn btn-secondary">
+              iOS / iPad (App Store)
+            </a>
+          </div>
+        </div>
+
+        <!-- Step 2 -->
+        <div class="step-card">
+          <div class="step-number">2</div>
+          <h3>Add Server in Moonlight</h3>
+          <p>
+            Make sure your phone is connected to <strong>Tailscale</strong> (recommended for worldwide play) or on the same network, open Moonlight, tap <strong>Add Host (+)</strong>, and enter:
+          </p>
+          <div class="code-box">
+            <span id="txt-tailscale-ip">detecting…</span>
+            <button class="btn btn-secondary" style="padding: 0.2rem 0.6rem; font-size: 0.75rem;" onclick="copyHostAddress()">Copy</button>
+          </div>
+          <p id="public-ip-note" style="font-size: 0.8rem; color: var(--text-dim); display: none;"></p>
+        </div>
+
+        <!-- Step 3 -->
+        <div class="step-card">
+          <div class="step-number">3</div>
+          <h3>Enter 4-Digit Pairing PIN</h3>
+          <div id="live-pairing-banner" style="display: none; background: rgba(0, 255, 170, 0.15); border: 1px solid var(--accent-green); padding: 0.75rem 1rem; border-radius: 8px; margin-bottom: 1rem;">
+            <div style="font-weight: 600; color: var(--accent-green); display: flex; align-items: center; gap: 0.5rem;">
+              <span style="display: inline-block; width: 10px; height: 10px; background: var(--accent-green); border-radius: 50%; box-shadow: 0 0 8px var(--accent-green); animation: pulse 1.5s infinite;"></span>
+              Device detected: <span id="detected-device-name">Client</span>
+            </div>
+            <div style="font-size: 0.85rem; color: var(--text-dim); margin-top: 0.25rem;">
+              Ready for pairing! Enter the 4 digits displayed on Moonlight below.
+            </div>
+          </div>
+          <p>
+            When you tap on your server in Moonlight on your phone or PC, Moonlight will show a 4-digit PIN. Enter it below and tap <strong>Pair Phone / PC</strong>:
+          </p>
+          <div class="pin-input-group">
+            <input type="text" id="pin-input" class="pin-input" maxlength="4" placeholder="0000" inputmode="numeric">
+            <button class="btn btn-primary" id="btn-pair-pin" onclick="submitPairingPin()">Submit PIN</button>
+          </div>
+          <div id="pair-result" style="margin-top: 0.75rem; font-size: 0.85rem; display: none;"></div>
+          <div style="margin-top: 1rem; padding-top: 0.75rem; border-top: 1px solid rgba(255, 255, 255, 0.08); display: flex; align-items: center; justify-content: space-between;">
+            <span style="font-size: 0.75rem; color: var(--text-dim);">Stuck on Error 409 or old pairing session?</span>
+            <button class="btn btn-secondary" style="font-size: 0.75rem; padding: 0.3rem 0.6rem;" onclick="resetPairingSession()">Reset Session</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Tab 4: Settings -->
+    <div class="tab-content" id="view-settings">
+      <h2 class="section-title">Host Server Configuration</h2>
+      <div class="card">
+        <h3 style="margin-bottom: 0.75rem;">Network Endpoints</h3>
+        <div style="display: grid; gap: 0.75rem;">
+          <div class="code-box">
+            <span>Moonlight host:</span>
+            <strong id="settings-tailscale-ip">detecting…</strong>
+          </div>
+          <div class="code-box">
+            <span>Public address:</span>
+            <strong id="settings-public-ip">not configured</strong>
+          </div>
+          <div class="code-box">
+            <span>Sunshine admin UI:</span>
+            <strong>localhost only</strong>
+          </div>
+          <div class="code-box">
+            <span>Hub control token:</span>
+            <button class="btn btn-secondary" style="padding: 0.2rem 0.6rem; font-size: 0.75rem;" onclick="setHubToken()">Set token</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <footer>
+    Cloud Gaming Hub &bull; Sunshine &amp; Moonlight
+  </footer>
+
+  <script src="app.js"></script>
+</body>
+</html>
